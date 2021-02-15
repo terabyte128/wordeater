@@ -45,12 +45,16 @@ def add_word():
     c = db.cursor()
 
     word = request.form["word"].lower().strip()
-    if not re.fullmatch(r"[a-z\s]+", word):
-        flash("Your word can only contain letters or spaces. Try again?")
+    if len(word) == 0:
+        flash("Your word cannot be empty. Try again?")
         return redirect(url_for("index"))
 
     if not len(word) <= 30:
         flash("Your word cannot be longer than 30 characters. Try again?")
+        return redirect(url_for("index"))
+
+    if not re.fullmatch(r"[a-z\s]+", word):
+        flash("Your word can only contain letters or spaces. Try again?")
         return redirect(url_for("index"))
 
     try:
