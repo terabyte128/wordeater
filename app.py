@@ -48,6 +48,10 @@ def add_word():
         flash("Your word can only contain letters or spaces. Try again?")
         return redirect(url_for("index"))
 
+    if not len(word) <= 30:
+        flash("Your word cannot be longer than 30 characters. Try again?")
+        return redirect(url_for("index"))
+
     try:
         c.execute("INSERT INTO words (word) VALUES (?)", (word,))
         db.commit()
