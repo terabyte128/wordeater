@@ -44,7 +44,7 @@ def add_word():
     db = get_db()
     c = db.cursor()
 
-    word = request.form["word"].lower().strip()
+    word = request.form.get("word").lower().strip()
     if len(word) == 0:
         flash("Your word cannot be empty. Try again?")
         return redirect(url_for("index"))
