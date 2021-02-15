@@ -1,4 +1,5 @@
 import re
+import random
 import sqlite3
 
 from flask import request, Flask, g, render_template, flash, redirect, url_for
@@ -64,7 +65,16 @@ def add_word():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    db = get_db()
+    c = db.cursor()
+
+    c.execute("select count(*) from words")
+    count = c.fetchone()[0]
+
+    approx = random.randint(count - 5, count + 5)
+
+    params = {"count": approx}
+    return render_template("index.html", **params)
 
 
 @app.route("/supersecretdontlookhere")
